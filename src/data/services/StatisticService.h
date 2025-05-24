@@ -6,6 +6,11 @@
 #include <queue>
 #include <iostream>
 
+#include "../../domain/models/ErrorEvent.h"
+#include "../../domain/models/ClientArrivalEvent.h"
+#include "../../domain/models/ClientTookTableEvent.h"
+#include "../../domain/models/ClientWaitEvent.h"
+#include "../../domain/models/ClientLeftEvent.h"
 #include "../../domain/models/InputHeaderData.h"
 #include "../../domain/services/StatisticServiceInterface.h"
 

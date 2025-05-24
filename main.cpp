@@ -3,6 +3,7 @@
 
 #include "src/data/services/ClubService.h"
 #include "src/data/services/StatisticService.h"
+#include "src/data/services/CommandLineParser.cpp"
 #include "src/data/repositories/InputRepository.h"
 #include "src/data/repositories/OutputRepository.h"
 #include "src/data/services/parsers/ClientArrivalParser.h"
@@ -24,20 +25,29 @@ std::shared_ptr<EventParserInterface> ParserChainFactory() {
     return client_arrival_parser;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
 
-    auto input_repository = std::make_shared<InputRepository>("../files/input.txt");
-    auto header_data = input_repository->ReadHeader();
-    auto parser_chain = ParserChainFactory();
-    auto output_repository = std::make_shared<OutputRepository>("../files/output.txt");
-    auto stat_service = std::make_shared<StatisticService>(header_data, output_repository);
+    try {
 
-    std::shared_ptr<ClubServiceInterface> club_service = std::make_shared<ClubService>(
-        parser_chain,
-        stat_service,
-        input_repository
-    );
-    club_service->MakeReport();
+        CommandLineParser arg_parser;
+        auto files = arg_parser.ParseCommandLine(argc, argv);
+        
+        auto input_repository = std::make_shared<InputRepository>(files.input_file_);
+        auto header_data = input_repository->ReadHeader();
+        auto parser_chain = ParserChainFactory();
+        auto output_repository = std::make_shared<OutputRepository>(files.output_file_);
+        auto stat_service = std::make_shared<StatisticService>(header_data, output_repository);
+
+        std::shared_ptr<ClubServiceInterface> club_service = std::make_shared<ClubService>(
+            parser_chain,
+            stat_service,
+            input_repository
+        );
+        club_service->MakeReport();
+
+    } catch (const std::exception& ex) {
+        std::cout << ex.what() << "\n";
+    }
 
     return 0;
 }

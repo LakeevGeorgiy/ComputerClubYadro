@@ -16,6 +16,7 @@ add_library(${PROJECT_NAME}
     services/EventParserInterface.h 
     services/EventParserInterface.cpp
     services/EventServiceInterface.h 
+    services/CommandLineParserInterface.h
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)

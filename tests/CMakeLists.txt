@@ -17,6 +17,7 @@ add_executable(
     parsers/TookTableEventParserTests.cpp 
     parsers/LeftEventParserTests.cpp 
     parsers/WaitEventParserTests.cpp
+    StatisticServiceTests.cpp
     TimeModelTest.cpp
 )
 

@@ -3,12 +3,6 @@
 #include <algorithm>
 #include <cmath>
 
-#include "../../domain/models/ErrorEvent.h"
-#include "../../domain/models/ClientArrivalEvent.h"
-#include "../../domain/models/ClientTookTableEvent.h"
-#include "../../domain/models/ClientWaitEvent.h"
-#include "../../domain/models/ClientLeftEvent.h"
-
 void StatisticService::LeftTable(const Time &cur_time, const std::string& client) {
     if (clients_table_.find(client) == clients_table_.end()) {
         return;
@@ -52,7 +46,7 @@ void StatisticService::HandleEvent(ClientArrivalEvent& event) {
         return;
     }
 
-    if (event.time_ < header_.start_time_) {
+    if (event.time_ < header_.start_time_ || header_.end_time_ < event.time_) {
         ErrorEvent error_event(kErrorId, event.time_, "NotOpenYet");
         error_event.AcceptVisitor(shared_from_this());
         return;
@@ -64,6 +58,10 @@ void StatisticService::HandleEvent(ClientArrivalEvent& event) {
 void StatisticService::HandleEvent(ClientTookTableEvent& event) {
     repository_->WriteLine(event.GetString());
     const uint8_t kErrorId = 13;
+
+    if (event.table_id_ > header_.count_tables_) {
+        throw std::runtime_error("tbleId must be less or equal than number of tables");
+    }
 
     if (busy_tables_.find(event.table_id_) != busy_tables_.end()){
         ErrorEvent error_event(kErrorId, event.time_, "PlaceIsBusy");

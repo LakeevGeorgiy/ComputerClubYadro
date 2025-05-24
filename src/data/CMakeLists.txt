@@ -19,6 +19,8 @@ add_library(${PROJECT_NAME}
     services/EventService.cpp 
     services/StatisticService.h 
     services/StatisticService.cpp 
+    services/CommandLineParser.h 
+    services/CommandLineParser.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC DomainLayer)
