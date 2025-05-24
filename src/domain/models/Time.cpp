@@ -22,13 +22,28 @@ Time::Time(std::string_view time_str) {
     }
     
     hours_ = GetDigit(copy_str[0]) * 10 + GetDigit(copy_str[1]);
+    if (hours_ >= 24) {
+        throw std::runtime_error("Hours must be less than 24");
+    }
     minutes_ = GetDigit(copy_str[3]) * 10 + GetDigit(copy_str[4]);
+
+    if (minutes_ >= 60) {
+        throw std::runtime_error("Minutes must be less than 60");
+    }
 
 }
 Time::Time(uint8_t hours, uint8_t minutes)
     : hours_(hours)
     , minutes_(minutes)
-{ }
+{ 
+    if (hours_ >= 24) {
+        throw std::runtime_error("Hours must be less than 24");
+    }
+
+    if (minutes_ >= 60) {
+        throw std::runtime_error("Minutes must be less than 60");
+    }
+}
 
 Time::Time(const Time &other)
     : hours_(other.hours_)
@@ -62,5 +77,5 @@ bool operator==(const Time &lhs, const Time &rhs) {
 }
 
 bool operator<(const Time &lhs, const Time &rhs){
-    return lhs.hours_ < rhs.hours_ || (lhs.hours_ == rhs.hours_ && lhs.hours_ < rhs.hours_);
+    return lhs.hours_ < rhs.hours_ || (lhs.hours_ == rhs.hours_ && lhs.minutes_ < rhs.minutes_);
 }

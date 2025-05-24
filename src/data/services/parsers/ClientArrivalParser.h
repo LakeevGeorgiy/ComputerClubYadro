@@ -2,6 +2,7 @@
 
 #include "../../../domain/models/Time.h"
 #include "../../../domain/services/EventParserInterface.h"
+#include "../../../domain/models/ClientArrivalEvent.h"
 
 class ClientArrivalParser : public EventParserInterface {
 public:

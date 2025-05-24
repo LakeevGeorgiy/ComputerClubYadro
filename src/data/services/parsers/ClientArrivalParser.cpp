@@ -3,8 +3,6 @@
 #include <regex>
 #include <exception>
 
-#include "../../../domain/models/ClientArrivalEvent.h"
-
 std::shared_ptr<BaseEvent> ClientArrivalParser::ParseEvent(std::string_view line){
 
     const uint8_t kClientArrivalId = 1;

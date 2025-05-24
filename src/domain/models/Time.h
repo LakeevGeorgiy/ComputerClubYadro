@@ -11,7 +11,7 @@ private:
 
     uint8_t GetDigit(char symbol);
     
-    public:
+public:
     
     Time() = default;
     Time(std::string_view time_str);
