@@ -26,29 +26,18 @@ std::shared_ptr<EventParserInterface> ParserChainFactory() {
 
 int main() {
 
-    auto input_repository = std::make_shared<InputRepository>("files/input.txt");
+    auto input_repository = std::make_shared<InputRepository>("../files/input.txt");
     auto header_data = input_repository->ReadHeader();
     auto parser_chain = ParserChainFactory();
-    // auto stat_service = std::make_shared<StatisticService>();
-    // auto output_repository = std::make_shared<OutputRepository>();
+    auto output_repository = std::make_shared<OutputRepository>("../files/output.txt");
+    auto stat_service = std::make_shared<StatisticService>(header_data, output_repository);
 
-    // std::shared_ptr<ClubServiceInterface> club_service = std::make_shared<ClubService>(
-    //     parser_chain,
-    //     stat_service,
-    //     input_repository,
-    //     output_repository
-    // );
-    // club_service->MakeReport();
-
-    std::string data1 = "13:24 1 georgiy";
-    std::string data2 = "13:25 2 georgiy 2";
-    std::string data3 = "13:24 3 georgiy";
-    std::string data4 = "13:24 4 georgiy";
-
-    auto value = parser_chain->ParseEvent(data1);
-    value = parser_chain->ParseEvent(data2);
-    value = parser_chain->ParseEvent(data3);
-    value = parser_chain->ParseEvent(data4);
+    std::shared_ptr<ClubServiceInterface> club_service = std::make_shared<ClubService>(
+        parser_chain,
+        stat_service,
+        input_repository
+    );
+    club_service->MakeReport();
 
     return 0;
 }

@@ -21,6 +21,6 @@ public:
     }
 
     std::string GetString() const override {
-        return time_.GetString() + " " + std::to_string(id_) + client_ + std::to_string(table_id_);
+        return time_.GetString() + " " + std::to_string(id_) + " " + client_ + " " + std::to_string(table_id_);
     }
 };

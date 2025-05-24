@@ -34,17 +34,17 @@ bool InputRepository::CheckHeader(const std::string& count_tables, const std::st
     const std::string kHourCost = "^[\\s]*[\\d]{1,9}[\\s]*$";
 
     std::regex count_regex(kCountTables);
-    if (std::regex_match(count_tables, count_regex)) {
+    if (!std::regex_match(count_tables, count_regex)) {
         throw std::invalid_argument("First row must contain exactly one integer value");
     }
 
     std::regex time_regex(kStartEndTime);
-    if (std::regex_match(time, time_regex)) {
+    if (!std::regex_match(time, time_regex)) {
         throw std::invalid_argument("Second row must contain exactly two timestamp values");
     }
 
     std::regex cost_regex(kHourCost);
-    if (std::regex_match(cost, cost_regex)) {
+    if (!std::regex_match(cost, cost_regex)) {
         throw std::invalid_argument("Third row must contain exactly one integer value");
     }
 

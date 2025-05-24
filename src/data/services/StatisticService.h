@@ -2,7 +2,9 @@
 
 #include <vector>
 #include <unordered_map>
+#include <unordered_set>
 #include <queue>
+#include <iostream>
 
 #include "../../domain/models/InputHeaderData.h"
 #include "../../domain/services/StatisticServiceInterface.h"
@@ -19,13 +21,15 @@ private:
     InputHeaderData header_;
     std::vector<TableStatistic> statistic_;
 
+    std::unordered_set<std::string> clients_in_club_;
     std::unordered_map<uint32_t, Time> busy_tables_;
-    std::unordered_map<std::string, uint32_t> clients_;
+    std::unordered_map<std::string, uint32_t> clients_table_;
     std::queue<std::string> waiting_clients_;
 
     std::shared_ptr<OutputRepositoryInterface> repository_;
 
     void LeftTable(const Time& cur_time, const std::string& client);
+    void TakeTable(const Time& cur_time, const std::string& client, uint32_t table_id);
     
 public:
 

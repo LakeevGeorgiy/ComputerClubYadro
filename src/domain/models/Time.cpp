@@ -41,7 +41,7 @@ std::string Time::GetString() const {
 
 Time& Time::operator+=(const Time &rhs) {
     minutes_ += rhs.minutes_;
-    hours_ += (rhs.hours_ + minutes_ % 60);
+    hours_ += (rhs.hours_ + minutes_ / 60);
     minutes_ %= 60;
     return *this;
 }
