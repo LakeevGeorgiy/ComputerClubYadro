@@ -13,7 +13,10 @@ enable_testing()
 
 add_executable(
     ${PROJECT_NAME}
-    parsers/ClientArrivalParserTests.cpp
+    parsers/ArrivalEventParserTests.cpp
+    parsers/TookTableEventParserTests.cpp 
+    parsers/LeftEventParserTests.cpp 
+    parsers/WaitEventParserTests.cpp
     TimeModelTest.cpp
 )
 

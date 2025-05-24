@@ -4,7 +4,6 @@
 #include <regex>
 
 #include "../../../domain/models/Time.h"
-#include "../../../domain/models/ClientTookTableEvent.h"
 
 std::shared_ptr<BaseEvent> ClientTookTableParser::ParseEvent(std::string_view line) {
 
@@ -19,9 +18,9 @@ std::shared_ptr<BaseEvent> ClientTookTableParser::ParseEvent(std::string_view li
     std::string copy_line(line);
     const std::string kTimeRegex = "^[\\d]{2}:[\\d]{2}";
     const std::string kIdRegex = "[\\d]{1,9}";
-    const std::string kClientRegex = "[\\w]+";
+    const std::string kClientRegex = "[a-z,0-9,_]+";
 
-    std::regex regex(kTimeRegex + " " + kIdRegex + " " + kClientRegex + " " + kIdRegex);
+    std::regex regex(kTimeRegex + " " + kIdRegex + " " + kClientRegex + " " + kIdRegex + "$");
     if (!std::regex_match(copy_line, regex)) {
         throw std::invalid_argument("Client took table event isn't formed correct");
     }
@@ -33,6 +32,10 @@ std::shared_ptr<BaseEvent> ClientTookTableParser::ParseEvent(std::string_view li
 
     std::istringstream stream { copy_line };
     stream >> time >> event_id >> client >> table_id;
+
+    if (table_id < 1) {
+        throw std::invalid_argument("Table id must be greater than zero");
+    }
 
     return std::make_shared<ClientTookTableEvent>(event_id, Time(time), client, table_id);
 }

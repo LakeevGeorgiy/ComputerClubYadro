@@ -4,7 +4,6 @@
 #include <exception>
 
 #include "../../../domain/models/Time.h"
-#include "../../../domain/models/ClientWaitEvent.h"
 
 std::shared_ptr<BaseEvent> ClientWaitParser::ParseEvent(std::string_view line){
 
@@ -19,7 +18,7 @@ std::shared_ptr<BaseEvent> ClientWaitParser::ParseEvent(std::string_view line){
     std::string copy_line(line);
     const std::string kTimeRegex = "^[\\d]{2}:[\\d]{2}";
     const std::string kIdRegex = "[\\d]+";
-    const std::string kClientRegex = "[\\w]+";
+    const std::string kClientRegex = "[a-z,0-9,_]+$";
 
     const uint8_t kTimeLength = 5;
 

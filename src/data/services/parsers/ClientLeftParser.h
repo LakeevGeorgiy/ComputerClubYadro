@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../../domain/services/EventParserInterface.h"
+#include "../../../domain/models/ClientLeftEvent.h"
 
 class ClientLeftParser : public EventParserInterface {
 public:

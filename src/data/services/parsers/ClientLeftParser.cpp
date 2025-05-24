@@ -5,7 +5,6 @@
 #include <sstream>
 
 #include "../../../domain/models/Time.h"
-#include "../../../domain/models/ClientLeftEvent.h"
 
 std::shared_ptr<BaseEvent> ClientLeftParser::ParseEvent(std::string_view line){
 
@@ -20,7 +19,7 @@ std::shared_ptr<BaseEvent> ClientLeftParser::ParseEvent(std::string_view line){
     std::string copy_line(line);
     const std::string kTimeRegex = "^[\\d]{2}:[\\d]{2}";
     const std::string kIdRegex = "[\\d]{1,9}";
-    const std::string kClientRegex = "[\\w]+";
+    const std::string kClientRegex = "[a-z,0-9,_]+$";
 
     const uint8_t kTimeLength = 5;
 
