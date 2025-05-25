@@ -23,6 +23,7 @@ cd ComputerClubYadro
 ```
 mkdir build
 cd build
+cmake ..
 cmake --build .
 ```
 Для запуска достаточно прописать полный путь до исполняемого файла, лежащего в "build/ComputerClubYadro":
